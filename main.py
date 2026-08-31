@@ -87,13 +87,17 @@ async def handle_video_link(message: types.Message):
     input_file = os.path.join(TEMP_DIR, f"input_{unique_id}.mp4")
     output_file = os.path.join(TEMP_DIR, f"shorts_{unique_id}.mp4")
     
-    ydl_opts = {
+   ydl_opts = {
         'format': 'bestvideo[height<=720]+bestaudio/best[height<=720]/best',
         'outtmpl': input_file,
         'overwrites': True,
         'quiet': True,
         'nocheckcertificate': True,
-        'ffmpeg_location': FFMPEG_EXE
+        'ffmpeg_location': FFMPEG_EXE,
+        'socket_timeout': 30,
+        'retries': 10,
+        'fragment_retries': 10,
+        'source_address': '0.0.0.0',
     }
     
     try:
